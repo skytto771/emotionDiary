@@ -8,9 +8,11 @@ const api = {
     register: joinBaseUrl('/register'),
     login: joinBaseUrl('/login'),
     forgotPassword: joinBaseUrl('/forgotPassword'),
+    checkLogin: joinBaseUrl('/checkLogin'),
   },
   diary: {
     getDiaries: joinBaseUrl('/getDiaries'),
+    getDiaryDetail: joinBaseUrl('/getDiaryDetail'),
     addDiary: joinBaseUrl('/addDiary'),
     updateDiary: joinBaseUrl('/updateDiary'),
     deleteDiary: joinBaseUrl('/deleteDiary'),

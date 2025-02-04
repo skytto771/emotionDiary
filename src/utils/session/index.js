@@ -1,12 +1,13 @@
 const session = {
-  sessionName: 'QS3MGT_SESSION',
+  sessionName: 'ED_SESSION',
   timeout: 20, //设置本地session过期时间,单位为分钟
   /* 获取token */
   getToken: function () {
     var sessionData = this.getSession()
 
     if (sessionData != null) {
-      return sessionData.accesstoken || sessionData.token
+      // return sessionData.accesstoken || sessionData.token
+      return sessionData
     } else {
       return ''
     }
@@ -14,6 +15,7 @@ const session = {
   /* 获取 */
   getSession: function () {
     var data = localStorage.getItem(this.sessionName)
+
     var session = JSON.parse(data)
     return session
   },

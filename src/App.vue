@@ -5,8 +5,7 @@
 </template>
 
 <script setup>
-import { ElMessage } from 'element-plus'
-import { ref, getCurrentInstance } from 'vue'
+import { getCurrentInstance } from 'vue'
 import { RouterView } from 'vue-router'
 
 const { proxy } = getCurrentInstance()
@@ -18,5 +17,6 @@ const { proxy } = getCurrentInstance()
   height: 100vh;
   background-color: var(--ed-background-color);
   color: var(--ed-text-color);
+  font-size: 1.5;
 }
 </style>

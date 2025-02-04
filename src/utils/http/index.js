@@ -10,7 +10,8 @@ var axiosObj = axios.create({
 axiosObj.interceptors.request.use(
   (config) => {
     var token = session.getToken()
-    config.headers.AuthToken = token /*设置默认请求头*/
+
+    config.headers.Authorization = token /*设置默认请求头*/
     config.timeout = 120000 /*设置请求超时时间为2分钟*/
     return config
   },

@@ -2,9 +2,9 @@
 import { reactive } from 'vue'
 
 export const themeState = reactive({
-  isDark: false, // 初始主题状态
-  setTheme(isDark) {
-    this.isDark = isDark
+  isDark: localStorage.getItem('ed_isDartTheme') || false, // 初始主题状态
+  setTheme(val) {
+    this.isDark = val
 
     document.documentElement.setAttribute('data-theme', this.isDark ? 'dark' : 'light')
   },

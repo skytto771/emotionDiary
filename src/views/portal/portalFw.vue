@@ -35,7 +35,7 @@
           </div>
           <el-dropdown class="avatar_dropdown">
             <div class="avatar_box">
-              <div class="name">张三</div>
+              <div class="name">{{ userObj['username'] }}</div>
               <div class="avatar">
                 <img src="@/static/img/imgError.png" alt="" />
               </div>
@@ -44,7 +44,7 @@
               <el-dropdown-menu>
                 <el-dropdown-item>
                   <template #default>
-                    <span>个人中心</span>
+                    <span @click="router.push('/personal')">个人中心</span>
                   </template>
                 </el-dropdown-item>
                 <el-dropdown-item divided @click="exitFuc">
@@ -68,6 +68,9 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const route = useRoute()
+const props = defineProps({
+  userObj: Object,
+})
 
 const { proxy } = getCurrentInstance()
 
@@ -79,6 +82,7 @@ const menuList = ref([
   {
     name: '日记',
     index: '/diaryList',
+    children: [],
   },
   {
     name: '社区',
@@ -119,6 +123,7 @@ onMounted(() => {
   height: 100%;
   box-sizing: border-box;
   border-bottom: 1px solid var(--ed-border-color);
+  background-color: var(--ed-secondary-background-color);
   .portalFw_box {
     display: flex;
     height: 100%;

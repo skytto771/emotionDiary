@@ -26,13 +26,42 @@
   --ed-menu-item-hover: rgba(187, 222, 251, 0.5); /* 添加透明度的菜单项 hover 颜色 */
   --ed-Primary-icon-color: #cecece;
   --ed-active-text-color: #2196f3; /* 激活字体颜色 */
+  --ed-active-border-color: #1976d2; /* 激活边框颜色 */
   --ed-primary-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* 修改主阴影色 */
-  --ed-card-background: rgba(255, 255, 255, 0.8); /* 悬浮工具栏背景 */
+
+  --ed-card-background: rgba(255, 255, 255); /* 悬浮工具栏背景 */
   --ed-card-hover-background: #e0e0e0; /* 悬浮工具 hover 背景颜色 */
 
+  /* 输入框 */
   --ed-input-background-color: #ffffff; /* 输入框背景颜色 */
   --ed-input-border-color: #cccccc; /* 输入框边框颜色 */
   --ed-input-focus-border-color: #2196f3; /* 输入框聚焦边框颜色 */
+  --ed-input-active-border-color: #1976d2; /* 输入框激活边框颜色 */
+
+  /* 按钮 */
+  --ed-button-basic-color: #e0e0e0; /* 基础按钮背景颜色 */
+  --ed-button-basic-hover-color: #d0d0d0; /* 基础按钮 hover 背景颜色 */
+  --ed-button-basic-active-color: #c0c0c0; /* 基础按钮点击时背景颜色 */
+  --ed-button-basic-border-color: #cccccc; /* 基础按钮边框颜色 */
+  --ed-button-basic-text-color: #000000; /* 基础按钮字体颜色 */
+  --ed-button-basic-disabled-color: #b0b0b0; /* 禁用状态基础按钮背景颜色 */
+  --ed-button-basic-disabled-text-color: #707070; /* 禁用状态基础按钮字体颜色 */
+
+  --ed-button-primary-color: #2196f3; /* 主要按钮背景颜色 */
+  --ed-button-primary-hover-color: #1976d2; /* 主要按钮 hover 背景颜色 */
+  --ed-button-primary-active-color: #1565c0; /* 主要按钮点击时背景颜色 */
+  --ed-button-primary-border-color: #1976d2; /* 主要按钮边框颜色 */
+  --ed-button-primary-text-color: #ffffff; /* 主要按钮字体颜色 */
+  --ed-button-primary-disabled-color: #1e88e5; /* 禁用状态主要按钮背景颜色 */
+  --ed-button-primary-disabled-text-color: #a3c1e0; /* 禁用状态主要按钮字体颜色 */
+
+  --ed-button-warning-color: #f44336; /* 警示按钮背景颜色 */
+  --ed-button-warning-hover-color: #d32f2f; /* 警示按钮 hover 背景颜色 */
+  --ed-button-warning-active-color: #c62828; /* 警示按钮点击时背景颜色 */
+  --ed-button-warning-border-color: #d32f2f; /* 警示按钮边框颜色 */
+  --ed-button-warning-text-color: #ffffff; /* 警示按钮字体颜色 */
+  --ed-button-warning-disabled-color: #e57373; /* 禁用状态警示按钮背景颜色 */
+  --ed-button-warning-disabled-text-color: #ffffff; /* 禁用状态警示按钮字体颜色 */
 }
 
 /* 暗色主题 */
@@ -46,11 +75,125 @@
   --ed-border-color: #333333; /* 深灰色边框，与背景形成对比 */
   --ed-menu-item-hover: rgba(51, 51, 51, 0.7); /* 添加透明度的暗色主题菜单项 hover 颜色 */
   --ed-active-text-color: #5c6bc0; /* 暗色主题激活字体颜色 */
+  --ed-active-border-color: #5c6bc0; /* 暗色主题激活边框颜色 */
   --ed-primary-shadow: 0 4px 15px rgba(255, 255, 255, 0.5); /* 修改主阴影色 */
   --ed-card-background: rgba(30, 30, 30, 0.8); /* 暗色主题悬浮工具栏背景 */
   --ed-card-hover-background: rgba(255, 255, 255, 0.1); /* 暗色主题悬浮工具 hover 背景颜色 */
 
+  /* 输入框 */
   --ed-input-background-color: #1e1e1e; /* 输入框背景颜色 */
   --ed-input-border-color: #444444; /* 输入框边框颜色 */
   --ed-input-focus-border-color: #5c6bc0; /* 输入框聚焦边框颜色 */
+  --ed-input-active-border-color: #5c6bc0; /* 输入框激活边框颜色 */
+
+  /* 按钮 */
+  --ed-button-basic-color: #555555; /* 暗色主题基础按钮背景颜色 */
+  --ed-button-basic-hover-color: #666666; /* 暗色主题基础按钮 hover 背景颜色 */
+  --ed-button-basic-active-color: #777777; /* 暗色主题基础按钮点击时背景颜色 */
+  --ed-button-basic-border-color: #444444; /* 暗色主题基础按钮边框颜色 */
+  --ed-button-basic-text-color: #ffffff; /* 暗色主题基础按钮字体颜色 */
+  --ed-button-basic-disabled-color: #444444; /* 禁用状态基础按钮背景颜色 */
+  --ed-button-basic-disabled-text-color: #888888; /* 禁用状态基础按钮字体颜色 */
+
+  --ed-button-primary-color: #5c6bc0; /* 暗色主题主要按钮背景颜色 */
+  --ed-button-primary-hover-color: #3949ab; /* 暗色主题主要按钮 hover 背景颜色 */
+  --ed-button-primary-active-color: #303f9f; /* 暗色主题主要按钮点击时背景颜色 */
+  --ed-button-primary-border-color: #3949ab; /* 暗色主题主要按钮边框颜色 */
+  --ed-button-primary-text-color: #ffffff; /* 暗色主题主要按钮字体颜色 */
+  --ed-button-primary-disabled-color: #4a90e2; /* 禁用状态主要按钮背景颜色 */
+  --ed-button-primary-disabled-text-color: #a3c1e0; /* 禁用状态主要按钮字体颜色 */
+
+  --ed-button-warning-color: #ff5252; /* 暗色主题警示按钮背景颜色 */
+  --ed-button-warning-hover-color: #d32f2f; /* 暗色主题警示按钮 hover 背景颜色 */
+  --ed-button-warning-active-color: #c62828; /* 暗色主题警示按钮点击时背景颜色 */
+  --ed-button-warning-border-color: #d32f2f; /* 暗色主题警示按钮边框颜色 */
+  --ed-button-warning-text-color: #ffffff; /* 暗色主题警示按钮字体颜色 */
+  --ed-button-warning-disabled-color: #e57373; /* 禁用状态警示按钮背景颜色 */
+  --ed-button-warning-disabled-text-color: #ffffff; /* 禁用状态警示按钮字体颜色 */
+}
+
+.btn_basic {
+  background-color: var(--ed-button-basic-color);
+  border: 1px solid var(--ed-button-basic-border-color);
+  color: var(--ed-button-basic-text-color);
+  &:hover {
+    background-color: var(--ed-button-basic-hover-color);
+  }
+  &:disabled {
+    background-color: var(--ed-button-basic-disabled-color);
+    color: var(--ed-button-basic-disabled-text-color);
+  }
+  &:active {
+    background-color: var(--ed-button-basic-active-color);
+  }
+}
+
+.ed_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  padding: 6px 16px;
+  box-sizing: border-box;
+  box-shadow: var(--ed-primary-shadow);
+  cursor: pointer;
+  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.btn_primary {
+  background-color: var(--ed-button-primary-color);
+  border: 1px solid var(--ed-button-primary-border-color);
+  color: var(--ed-button-primary-text-color);
+  &:hover {
+    background-color: var(--ed-button-primary-hover-color);
+  }
+  &:disabled {
+    background-color: var(--ed-button-primary-disabled-color);
+    color: var(--ed-button-primary-disabled-text-color);
+  }
+  &:active {
+    background-color: var(--ed-button-primary-active-color);
+  }
+}
+.btn_warning {
+  background-color: var(--ed-button-warning-color);
+  border: 1px solid var(--ed-button-warning-border-color);
+  color: var(--ed-button-warning-text-color);
+  &:hover {
+    background-color: var(--ed-button-warning-hover-color);
+  }
+  &:disabled {
+    background-color: var(--ed-button-warning-disabled-color);
+    color: var(--ed-button-warning-disabled-text-color);
+  }
+  &:active {
+    background-color: var(--ed-button-warning-active-color);
+  }
+}
+
+.ed_input {
+  padding: 8px 12px; /* 内边距 */
+  border: 1px solid var(--ed-input-border-color); /* 边框颜色 */
+  border-radius: 4px; /* 圆角 */
+  background-color: var(--ed-input-background-color); /* 背景颜色 */
+  color: var(--ed-text-color); /* 文字颜色 */
+  font-size: 14px; /* 字体大小 */
+  line-height: 1.5; /* 行高 */
+  width: 100%; /* 宽度 */
+  height: 32px;
+  /* box-shadow: var(--ed-primary-shadow); */
+  transition: border-color 0.3s ease;
+}
+
+.ed_input:focus {
+  border-color: var(--ed-input-focus-border-color); /* 聚焦时边框颜色 */
+  outline: none; /* 去掉默认的轮廓 */
+}
+
+.ed_input:disabled {
+  background-color: var(--ed-button-basic-disabled-color); /* 禁用状态背景颜色 */
+  color: var(--ed-button-basic-disabled-text-color); /* 禁用状态文字颜色 */
+  cursor: not-allowed; /* 禁用状态光标 */
 }

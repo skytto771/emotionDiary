@@ -14,7 +14,7 @@
             <el-input v-model="loginForm.email" placeholder="请输入邮箱" />
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input v-model="loginForm.password" placeholder="请输入密码" />
+            <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" />
           </el-form-item>
         </el-form>
         <div class="form_btnBox">

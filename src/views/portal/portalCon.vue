@@ -1,7 +1,7 @@
 <template>
   <div class="portalCon">
     <div class="portalCon_box">
-      <div class="portalFw"><portalFw></portalFw></div>
+      <div class="portalFw"><portalFw :userObj="userObj"></portalFw></div>
       <div class="portal_main">
         <div class="portal_main_right"><RouterView /></div>
       </div>
@@ -10,18 +10,20 @@
 </template>
 
 <script setup>
-import { getCurrentInstance, onMounted } from 'vue'
+import { getCurrentInstance, onMounted, ref } from 'vue'
 import portalFw from './portalFw.vue'
 import { useRouter } from 'vue-router'
 
 const { proxy } = getCurrentInstance()
 const router = useRouter()
+const userObj = ref({})
 
 onMounted(() => {
   proxy.$http
     .get(proxy.$api.user.checkLogin)
     .then((res) => {
       console.log(res)
+      userObj.value = res.data
     })
     .catch((err) => {
       if (err.response.data.code == 'NOT_LOGIN') {

@@ -19,11 +19,14 @@
             class="calendar_item_date"
             :style="{
               cursor: item.day ? 'pointer' : 'auto',
-              backgroundColor: item.currentDate ? '#f7f7f7' : 'transparent',
+              border: item.currentDate
+                ? '1px solid var(--ed-active-border-color)'
+                : '1px solid var(--ed-border-color)',
+              backgroundColor: getCalendarColor(item.diaryEmotion),
             }"
             v-for="(item, index) in monthArr"
             :key="index"
-            @click="toWritingFuc(item.diaryID)"
+            @click="toWritingFuc(item.diaryID, item.day)"
           >
             {{ item.day }}
           </div>
@@ -98,46 +101,38 @@ function getCalendar(year, month) {
     }
 
     for (let i = 1; i <= daysInMonth; i++) {
-      const calendarDate = dateObj.value.year + '-' + dateObj.value.month + '-' + i
-      function getDateString(date) {
-        if (date) {
-          const obj = getDate(date)
-          return obj.year + '-' + obj.month + '-' + obj.day
-        }
-        const obj = getDate()
-        return obj.year + '-' + obj.month + '-' + obj.day
+      const calendarDate = `${dateObj.value.year}-${dateObj.value.month}-${i}`
+      const isCurrentDate = getDateString(calendarDate) === getDateString()
+
+      // 创建基本对象
+      const baseObj = {
+        day: i,
+        diaryEmotion: null,
+        currentDate: isCurrentDate,
       }
+
       if (diaryList.value.length > 0) {
-        diaryList.value.forEach((item) => {
-          if (getDateString(calendarDate) == getDateString(item.createdDate)) {
-            calendarBlocks++
-            const obj = {
-              day: i,
-              diaryID: item.diaryID,
-              diaryEmotion: null,
-              currentDate: getDateString(calendarDate) == getDateString(),
-            }
-            monthArr.value.push(obj)
-          } else {
-            calendarBlocks++
-            const obj = {
-              day: i,
-              diaryID: null,
-              diaryEmotion: null,
-              currentDate: getDateString(calendarDate) == getDateString(),
-            }
-            monthArr.value.push(obj)
+        let hasDiary = false // 用于标识是否找到日记
+
+        for (let key in diaryList.value) {
+          if (getDateString(calendarDate) === getDateString(diaryList.value[key].createdDate)) {
+            hasDiary = true // 找到对应的日记
+            baseObj.diaryID = diaryList.value[key].diaryID
+            baseObj.diaryEmotion = diaryList.value[key].tagID
+            monthArr.value.push(baseObj)
+            break // 找到后退出循环
           }
-        })
-      } else {
-        calendarBlocks++
-        const obj = {
-          day: i,
-          diaryID: null,
-          diaryEmotion: null,
-          currentDate: getDateString(calendarDate) == getDateString(),
         }
-        monthArr.value.push(obj)
+
+        // 如果未找到对应的日记，添加默认对象
+        if (!hasDiary) {
+          baseObj.diaryID = null
+          monthArr.value.push(baseObj)
+        }
+      } else {
+        // 如果没有日记列表，则直接添加默认对象
+        baseObj.diaryID = null
+        monthArr.value.push(baseObj)
       }
     }
 
@@ -154,6 +149,35 @@ function getCalendar(year, month) {
 }
 getCalendar(dateObj.value.year, dateObj.value.month)
 
+function getCalendarColor(tagID) {
+  // 积极颜色
+  // 绿色 (#28a745): 代表生长、健康和和平。
+  // 蓝色 (#007bff): 传达信任、稳定和专业。
+  // 黄色 (#ffc107): 通常与乐观、阳光和欢快相关联。
+  // 橙色 (#fd7e14): 充满活力，通常与热情和创造力相联系。
+  // 消极颜色
+  // 红色 (#dc3545): 常用于警告，代表危险或紧急情况。
+  // 灰色 (#6c757d): 可能表示无聊或消极的情绪。
+  // 棕色 (#795548): 有时与悲伤和失落感联系在一起。
+  // 黑色 (#343a40): 通常与权力和优雅相关，但也可能传达沉重或消极的感觉。
+  if (tagID == 0) {
+    return '#dc3545'
+  } else if (tagID == 1) {
+    return '#28a745'
+  } else {
+    return 'transparent'
+  }
+}
+
+function getDateString(date) {
+  if (date) {
+    const obj = getDate(date)
+    return obj.year + '-' + obj.month + '-' + obj.day
+  }
+  const obj = getDate()
+  return obj.year + '-' + obj.month + '-' + obj.day
+}
+
 function changeMonthFuc(type) {
   if (type == 0) {
     const lastMonth = new Date(dateObj.value.year, dateObj.value.month - 2)
@@ -167,11 +191,24 @@ function changeMonthFuc(type) {
   }
 }
 
-function toWritingFuc(diaryID) {
-  router.push({
-    path: '/diaryList/diaryWriting',
-    query: { diaryID: diaryID },
-  })
+function toWritingFuc(diaryID, day) {
+  if (day) {
+    const theDate = dateObj.value.year + '-' + dateObj.value.month + '-' + day
+    const date = new Date().toISOString()
+    const curDate = date.split('T')[0]
+
+    const theDateTimeStamp = new Date(theDate).getTime()
+    const curDateTimeStamp = new Date().getTime()
+
+    if (theDateTimeStamp <= curDateTimeStamp) {
+      router.push({
+        path: '/diaryList/diaryWriting',
+        query: { diaryID: diaryID, date: theDate },
+      })
+    } else {
+      ElMessage.error('未到当前日期')
+    }
+  }
 }
 </script>
 
@@ -179,7 +216,7 @@ function toWritingFuc(diaryID) {
 .calendar {
   width: 100%;
   height: 100%;
-  background-color: var(--ed-secondary-color);
+  background-color: var(--ed-secondary-background-color);
   border-radius: 6px;
   .calendar_box {
     display: flex;

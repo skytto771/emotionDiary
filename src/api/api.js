@@ -9,6 +9,7 @@ const api = {
     login: joinBaseUrl('/login'),
     forgotPassword: joinBaseUrl('/forgotPassword'),
     checkLogin: joinBaseUrl('/checkLogin'),
+    getUserInfo: joinBaseUrl('/getUserInfo'),
   },
   diary: {
     getDiaries: joinBaseUrl('/getDiaries'),
@@ -17,6 +18,13 @@ const api = {
     updateDiary: joinBaseUrl('/updateDiary'),
     deleteDiary: joinBaseUrl('/deleteDiary'),
     getAnalysis: joinBaseUrl('/getAnalysis'),
+  },
+  files: {
+    uploadSmallFile: joinBaseUrl('/uploadSmallFile'),
+    startLUpload: joinBaseUrl('/startLUpload'),
+    uploadLargeFile: joinBaseUrl('/uploadLargeFile'),
+    mergeFileSlices: joinBaseUrl('/mergeFileSlices'),
+    getFilePath: joinBaseUrl('/getFilePath'),
   },
 }
 

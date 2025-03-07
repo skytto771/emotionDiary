@@ -4,7 +4,7 @@
       <div class="portalFw_left">
         <div class="portalFw_left_box">
           <div class="portalFw_left_logo">
-            <img src="@/static/img/EDlogo.png" alt="" />
+            <img src="@/assets/img/EDlogo.png" alt="" />
           </div>
           <div class="portalFw_left_title">情绪日记</div>
         </div>
@@ -37,7 +37,14 @@
             <div class="avatar_box">
               <div class="name">{{ userObj['username'] }}</div>
               <div class="avatar">
-                <img src="@/static/img/imgError.png" alt="" />
+                <img
+                  :src="
+                    globalStare.userObj.value['avatarUrl']
+                      ? globalStare.userObj.value['avatarUrl']
+                      : defaultAvatar
+                  "
+                  alt=""
+                />
               </div>
             </div>
             <template #dropdown>
@@ -63,6 +70,8 @@
 
 <script setup>
 import { ref, inject, getCurrentInstance, onMounted } from 'vue'
+import defaultAvatar from '@/assets/img/defaultAvatar.jpg'
+import formatDate from '@/utils/tools/formatDate'
 import { useRoute } from 'vue-router'
 import { useRouter } from 'vue-router'
 
@@ -75,6 +84,7 @@ const props = defineProps({
 const { proxy } = getCurrentInstance()
 
 const isDart = ref(false)
+const globalStare = inject('globalState')
 const themeState = inject('themeState')
 const activeRoute = ref(null)
 
@@ -85,9 +95,14 @@ const menuList = ref([
     children: [],
   },
   {
-    name: '社区',
-    index: '/community',
+    name: '报告',
+    index: '/report',
+    children: [],
   },
+  // {
+  //   name: '社区',
+  //   index: '/community',
+  // },
 ])
 
 function toggleTheme(val) {
@@ -106,7 +121,21 @@ function menuRouter(path) {
   router.push(path)
 }
 
+function getUserInfo() {
+  proxy.$http.get(proxy.$api.user.getUserInfo).then((res) => {
+    globalStare.userObj.value = res.data
+    for (let key in res.data) {
+      globalStare.userObj.value[key] = res.data[key]
+      if (key == 'registrationDate') {
+        globalStare.userObj.value[key] = formatDate(res.data[key])
+      }
+    }
+  })
+}
+
 onMounted(() => {
+  getUserInfo()
+
   const isDartTheme_l = JSON.parse(localStorage.getItem('ed_isDartTheme'))
   if (isDartTheme_l) {
     themeState.setTheme(isDartTheme_l)

@@ -8,13 +8,22 @@
           ref="loginRef"
           :model="loginForm"
           :rules="loginRules"
-          label-width="80"
+          label-width="auto"
         >
-          <el-form-item label="邮箱" prop="email">
-            <el-input v-model="loginForm.email" placeholder="请输入邮箱" />
+          <el-form-item label="账号/邮箱" prop="loginAccount">
+            <el-input
+              @keydown.enter="confirmLoginFuc"
+              v-model="loginForm.loginAccount"
+              placeholder="请输入账号/邮箱"
+            />
           </el-form-item>
           <el-form-item label="密码" prop="password">
-            <el-input type="password" v-model="loginForm.password" placeholder="请输入密码" />
+            <el-input
+              @keydown.enter="confirmLoginFuc"
+              type="password"
+              v-model="loginForm.password"
+              placeholder="请输入密码"
+            />
           </el-form-item>
         </el-form>
         <div class="form_btnBox">
@@ -36,6 +45,9 @@
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="registerForm.email" placeholder="请输入邮箱" />
+          </el-form-item>
+          <el-form-item label="账号" prop="account">
+            <el-input v-model="registerForm.account" placeholder="请输入账号" />
           </el-form-item>
           <el-form-item label="密码" prop="password">
             <el-input v-model="registerForm.password" placeholder="请输入密码" />
@@ -65,15 +77,25 @@ const registerRef = ref(null)
 const loginRef = ref(null)
 
 const loginForm = ref({
-  email: '',
+  loginAccount: '',
   password: '',
 })
 const registerForm = ref({
   username: '',
+  account: null,
   email: '',
   password: '',
   conPassword: '',
 })
+
+const accountVD = (rules, value, callback) => {
+  const regex = /^.{6,}$/
+  if (!regex.test(value)) {
+    callback(new Error('请输入至少六位数的账号'))
+  } else {
+    callback()
+  }
+}
 
 const emailVD = (rules, value, callback) => {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
@@ -101,7 +123,7 @@ const conPasswordVD = (rules, value, callback) => {
 }
 
 const loginRules = {
-  email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
+  loginAccount: [{ required: true, message: '请输入账号/邮箱', trigger: 'blur' }],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
     { validator: passwordVD, trigger: 'blur' },
@@ -110,6 +132,10 @@ const loginRules = {
 
 const registerRules = {
   username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+  account: [
+    { required: true, message: '请输入账号', trigger: 'blur' },
+    { validator: accountVD, trigger: 'blur' },
+  ],
   email: [
     { required: true, message: '请输入邮箱', trigger: 'blur' },
     { validator: emailVD, trigger: 'blur' },
@@ -155,7 +181,7 @@ const confirmLoginFuc = async () => {
     display: flex;
     justify-content: center;
     overflow: scroll;
-    background: url('@/static/img/loginBG.png') no-repeat;
+    background: url('@/assets/img/loginBG.png') no-repeat;
     .login_card,
     .register_card {
       width: 100%;

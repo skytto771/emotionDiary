@@ -21,7 +21,7 @@
   --ed-background-color: #f5f5f5; /* 浅灰色背景，减少视觉压力 */
   --ed-secondary-background-color: #ffffff; /* 次背景色 */
   --ed-text-color: #303033; /* 深灰色文字，提高可读性 */
-  --ed-light-text-color: #606060; /* 较浅的深灰色文字，提高可读性 */
+  --ed-light-text-color: #707070; /* 调整为更浅的灰色，提高对比度 */
   --ed-border-color: #dddddd; /* 浅灰色边框，与背景形成柔和对比 */
   --ed-menu-item-hover: rgba(187, 222, 251, 0.5); /* 添加透明度的菜单项 hover 颜色 */
   --ed-Primary-icon-color: #cecece;
@@ -70,8 +70,8 @@
   --ed-secondary-color: #5c6bc0; /* 较浅的蓝色，增加层次感 */
   --ed-background-color: #121212; /* 深黑色背景，减少眼部刺激 */
   --ed-secondary-background-color: #1e1e1e; /* 暗色主题次背景色，协调深色调 */
-  --ed-text-color: #4b5563; /* 浅灰色文字，提高可读性 */
-  --ed-light-text-color: #c1c1c1; /* 较浅的浅灰色文字，提高可读性 */
+  --ed-text-color: #e0e0e0; /* 调整为更亮的浅灰色，提高可读性 */
+  --ed-light-text-color: #a0a0a0; /* 调整为更暗的浅灰色，降低亮度 */
   --ed-border-color: #333333; /* 深灰色边框，与背景形成对比 */
   --ed-menu-item-hover: rgba(51, 51, 51, 0.7); /* 添加透明度的暗色主题菜单项 hover 颜色 */
   --ed-active-text-color: #5c6bc0; /* 暗色主题激活字体颜色 */
@@ -112,6 +112,32 @@
   --ed-button-warning-disabled-text-color: #ffffff; /* 禁用状态警示按钮字体颜色 */
 }
 
+/* 全局滚动条 */
+/* 自定义滚动条 */
+div::-webkit-scrollbar {
+  width: 8px; /* 滚动条宽度 */
+}
+
+div::-webkit-scrollbar-track {
+  border-radius: 10px; /* 圆角 */
+  cursor: pointer;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: #dddee000; /* 滚动条滑块颜色 */
+  border-radius: 10px; /* 圆角 */
+  transition: background 0.5s; /* 过渡效果 */
+  cursor: pointer;
+}
+
+div:hover div::-webkit-scrollbar-thumb {
+  background: #dddee0;
+}
+
+div:hover div::-webkit-scrollbar-thumb:hover {
+  background: #c7c9cc; /* 滚动条滑块悬停颜色 */
+}
+
 .btn_basic {
   background-color: var(--ed-button-basic-color);
   border: 1px solid var(--ed-button-basic-border-color);
@@ -140,6 +166,7 @@
   white-space: nowrap;
   font-size: 14px;
   line-height: 1.5;
+  transition: all 0.3s;
 }
 
 .btn_primary {
@@ -174,7 +201,8 @@
 }
 
 .ed_input {
-  padding: 8px 12px; /* 内边距 */
+  padding: 0 12px; /* 内边距 */
+  height: 32px; /* 高度 */
   border: 1px solid var(--ed-input-border-color); /* 边框颜色 */
   border-radius: 4px; /* 圆角 */
   background-color: var(--ed-input-background-color); /* 背景颜色 */
@@ -192,8 +220,115 @@
   outline: none; /* 去掉默认的轮廓 */
 }
 
+.ed_input:hover {
+  border-color: var(--ed-input-active-border-color); /* 激活时边框颜色 */
+}
+
 .ed_input:disabled {
   background-color: var(--ed-button-basic-disabled-color); /* 禁用状态背景颜色 */
   color: var(--ed-button-basic-disabled-text-color); /* 禁用状态文字颜色 */
   cursor: not-allowed; /* 禁用状态光标 */
+}
+
+.ed_select {
+  padding: 0 12px; /* 内边距 */
+  height: 32px; /* 高度 */
+  border: 1px solid var(--ed-input-border-color); /* 边框颜色 */
+  border-radius: 4px; /* 圆角 */
+  background-color: var(--ed-input-background-color); /* 背景颜色 */
+  color: var(--ed-text-color); /* 文字颜色 */
+  font-size: 14px; /* 字体大小 */
+  line-height: 1.5; /* 行高 */
+  width: 100%; /* 宽度 */
+  appearance: none; /* 去掉默认样式 */
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 10 10"><path fill="%23333333" d="M0 0L5 5L10 0H0z"/></svg>'); /* 向下箭头自定义图标 */
+  background-repeat: no-repeat; /* 不重复背景图 */
+  background-position: right 15px center; /* 图标位置 */
+  background-size: 10px; /* 图标大小 */
+  cursor: pointer; /* 鼠标样式 */
+  transition: border-color 0.3s ease; /* 过渡效果 */
+}
+
+/* 聚焦时效果 */
+.ed_select:focus {
+  border-color: var(--ed-input-focus-border-color); /* 聚焦时边框颜色 */
+  outline: none; /* 去掉默认的轮廓 */
+}
+
+/* 激活时效果 */
+.ed_select:hover {
+  border-color: var(--ed-input-active-border-color); /* 激活时边框颜色 */
+}
+
+/* 禁用状态样式 */
+.ed_select:disabled {
+  background-color: var(--ed-button-basic-disabled-color); /* 禁用状态背景颜色 */
+  color: var(--ed-button-basic-disabled-text-color); /* 禁用状态文字颜色 */
+  cursor: not-allowed; /* 禁用状态光标 */
+}
+
+/* Placeholder 样式 */
+.ed_select::-webkit-input-placeholder {
+  color: var(--ed-light-text-color); /* Placeholder 字体颜色 */
+  opacity: 0.5; /* 透明度 */
+}
+
+/* 自定义滚动条 */
+.ed_textarea::-webkit-scrollbar {
+  width: 8px; /* 滚动条宽度 */
+}
+
+.ed_textarea::-webkit-scrollbar-track {
+  background: var(--ed-border-color); /* 滚动条轨道背景 */
+  border-radius: 10px; /* 圆角 */
+  cursor: pointer;
+}
+
+.ed_textarea::-webkit-scrollbar-thumb {
+  background: var(--ed-button-primary-color); /* 滚动条滑块颜色 */
+  border-radius: 10px; /* 圆角 */
+  cursor: pointer;
+}
+
+.ed_textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--ed-button-primary-hover-color); /* 滚动条滑块悬停颜色 */
+}
+
+.ed_textarea {
+  padding: 8px 12px; /* 内边距 */
+  border: 1px solid var(--ed-input-border-color); /* 边框颜色 */
+  border-radius: 4px; /* 圆角 */
+  background-color: var(--ed-input-background-color); /* 背景颜色 */
+  color: var(--ed-text-color); /* 文字颜色 */
+  font-size: 14px; /* 字体大小 */
+  line-height: 1.5; /* 行高 */
+  width: 100%; /* 宽度 */
+  height: auto; /* 高度自适应 */
+  min-height: 100px; /* 最小高度 */
+  max-height: 300px; /* 最大高度 */
+  overflow-y: auto; /* 溢出时开启滚动条 */
+  resize: vertical;
+  transition:
+    border-color 0.3s ease,
+    box-shadow 0.3s ease; /* 过渡效果 */
+}
+
+/* 聚焦时效果 */
+.ed_textarea:focus {
+  border-color: var(--ed-input-focus-border-color); /* 聚焦时边框颜色 */
+  outline: none; /* 去掉默认的轮廓 */
+  box-shadow: 0 0 5px var(--ed-input-focus-border-color); /* 聚焦时阴影 */
+}
+
+/* 禁用状态样式 */
+.ed_textarea:disabled {
+  background-color: var(--ed-button-basic-disabled-color); /* 禁用状态背景颜色 */
+  color: var(--ed-button-basic-disabled-text-color); /* 禁用状态文字颜色 */
+  cursor: not-allowed; /* 禁用状态光标 */
+}
+
+/* 其它可选样式：添加 placeholder 的样式 */
+.ed_textarea::placeholder {
+  color: var(--ed-light-text-color); /* Placeholder 字体颜色 */
+  opacity: 0.5; /* 透明度 */
 }

@@ -1,11 +1,11 @@
 <template>
-  <div class="diaryList">
-    <div class="diaryList_box" ref="dragBoxRef">
+  <div class="diaryList"  ref="dragBoxRef">
+    <div class="diaryList_box">
       <div class="diaryList_calendar" v-if="diaryShowType == 'calendar'">
-        <calendar :getDiaries="getDiaries" />
+        <calendar />
       </div>
-      <div class="diaryList_dateLine" v-if="diaryShowType == 'dateLine'">
-        <dateLine :getDiaries="getDiaries" />
+      <div class="diaryList_schedule">
+        <schedule />
       </div>
     </div>
     <div v-if="showSearch" class="searchOverlay">
@@ -24,7 +24,8 @@
                     type="datetimerange"
                     start-placeholder="开始日期"
                     end-placeholder="结束日期"
-                    value-format="YYYY-MM-DD HH:mm:ss"
+                    format="YYYY-MM-DD"
+                    value-format="YYYY-MM-DD"
                     clearable
                 >
                 </el-date-picker>
@@ -85,20 +86,6 @@
           </g>
         </svg>
       </div>
-      <div
-        class="changeType_item"
-        :class="{ changeType_itemActive: diaryShowType == 'calendar' }"
-        @click="changeShowType('calendar')"
-      >
-        日历
-      </div>
-      <div
-        class="changeType_item"
-        :class="{ changeType_itemActive: diaryShowType == 'dateLine' }"
-        @click="changeShowType('dateLine')"
-      >
-        时间线
-      </div>
       <div class="search changeType_item" @click="toggleSearch">搜索</div>
     </div>
   </div>
@@ -107,7 +94,7 @@
 <script setup>
 import { onMounted, ref, getCurrentInstance } from 'vue'
 import calendar from './component/calendar.vue'
-import dateLine from './component/dateLine.vue'
+import schedule from './component/schedule.vue'
 
 const { proxy } = getCurrentInstance()
 
@@ -126,6 +113,8 @@ const searchLoading = ref(false)
 const searchObject = {
   title: '',
   timeRange: '',
+  pageCur: 1,
+  pageSize: 999
 }
 
 const searchObj = ref({ ...searchObject })
@@ -136,23 +125,6 @@ function changeShowType(type) {
 }
 
 function applyFilter() {}
-
-function getDiaries() {
-  const submitData = {
-    startTime: null,
-    endTime: null,
-    diaryTitle: null,
-  }
-  return proxy.$http
-    .post(proxy.$api.diary.getDiaries, { ...submitData })
-    .then((res) => {
-      diaryList.value = res.data
-      return res
-    })
-    .catch((err) => {
-      throw err
-    })
-}
 
 function dragStartFuc(e) {
   dragOffset.value = {}
@@ -198,20 +170,24 @@ function dragEndFuc(e) {
 
 // 打开/关闭搜索框
 function toggleSearch() {
+  searchList.value = []
+  if(!showSearch.value == false){
+    searchObj.value = {...searchObject.value}
+  }
   showSearch.value = !showSearch.value
 }
 
 // 执行搜索操作
 function performSearch() {
-  // 在这里实现实际的搜索逻辑
-  // 示例：假设我们用静态数据来模拟搜索结果
   const submitObj = {
     title:searchObj.value.title,
-    startTime:searchObj.value.timeRange[0]?searchObj.value.timeRange[0]:null,
-    endTime:searchObj.value.timeRange[1]?searchObj.value.timeRange[0]:null
+    startTime:searchObj.value.timeRange && (searchObj.value.timeRange[0]?searchObj.value.timeRange[0]:null),
+    endTime:searchObj.value.timeRange && (searchObj.value.timeRange[1]?searchObj.value.timeRange[1]:null),
+    pageCur:searchObj.value.pageCur,
+    pageSize:searchObj.value.pageSize
   }
   searchLoading.value = true
-  proxy.$http.post(proxy.$api.diary.getDiaries,submitObj).then(res=>{
+  proxy.$http.post(proxy.$api.diary.getDiaryList,submitObj).then(res=>{
     searchList.value = res.data
     searchLoading.value = false
   }).catch(err=>{
@@ -242,21 +218,38 @@ onMounted(() => {
   height: 100%;
   position: relative;
   .diaryList_box {
-    width: 100%;
-    height: 100%;
     display: flex;
-    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    gap: 60px;
     align-items: center;
-    padding: 12vh 0;
+    justify-content: center;
+    padding: 80px 120px;
     .diaryList_calendar {
-      width: 100%;
+      flex: 6;
       height: 100%;
-      max-width: 952px;
+      box-shadow: var(--ed-primary-shadow);
     }
-    .diaryList_dateLine {
-      width: 100%;
+    .diaryList_schedule{
+      flex: 4;
       height: 100%;
-      max-width: 952px;
+      box-shadow: var(--ed-primary-shadow);
+    }
+  }
+  @media screen and (max-width: 1200px) {
+    .diaryList_box{
+      flex-direction: column;
+      padding: 40px 40px;
+      justify-content: flex-start;
+      .diaryList_calendar{
+        width: 100%;
+        height: 100%;
+      }
+      .diaryList_schedule{
+        width: 100%;
+        height: 500px;
+      }
     }
   }
   .changeType {
@@ -347,7 +340,10 @@ onMounted(() => {
             white-space: nowrap;
             :deep(.el-date-editor){
               background-color: var(--ed-input-background-color);
-
+              box-shadow: 0 0 0 1px var(--ed-input-border-color);
+            }
+            :deep(.is-active){
+              box-shadow: 0 0 0 1px var(--ed-input-focus-border-color);
             }
           }
         }
